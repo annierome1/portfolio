@@ -140,7 +140,8 @@
     border-radius: 6px;
     outline: none;
     font-size: 16px;
-    background-color: #F3E8FF;
+    background-color: #1f2937;
+    color: #F3E8FF;
   }
   
   .chat-input button {
