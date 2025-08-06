@@ -119,11 +119,14 @@ function ProjectModal({ project, isOpen, onClose }) {
               <img
                 src={project.photo}
                 alt={`${project.title} screenshot`}
-                className="w-full max-w-xs h-auto rounded-lg shadow-inner"
+                className={
+                  `w-full h-auto rounded-lg shadow-inner max-w-xs ` +
+                  (project.title === "Escape Room: NP Edition" ? "w-[800px] h-[200px]" : "")
+                }
               />
             </div>
           )}
-        </div>
+                  </div>
       </div>
     </div>
   );

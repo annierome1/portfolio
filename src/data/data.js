@@ -19,7 +19,7 @@ export const projects = [
         "Editable event calendar and menus",
         "Live site deployment via Vercel"
       ],
-      photo: "/images/surfshack.png"
+      photo: "/assets/surfshack.png"
     },
   
     {
@@ -108,7 +108,7 @@ export const projects = [
           "Dedicated section for the Fighter Foundation and its mission",
           "Live deployment and automatic updates using Vercel"
         ],
-        photo: "/images/masda_logo_color_wt.png"
+        photo: "/assets/masda_logo_color_wt.png"
     },
     {
       title: "ResuBuild",
@@ -145,11 +145,9 @@ export const projects = [
         { name: "HTML", icon: "FaHtml5" },
         { name: "CSS", icon: "FaCss3Alt" }
       ],
-      images: [
-        "/images/escape-room/photo1.png",
-        "/images/escape-room/photo2.png",
+      photo:
+        "/assets/escape.jpg",
         
-      ],
       functions: [
         "Hamiltonian path puzzle generation",
         "Collectible-based escape room gameplay",
@@ -157,6 +155,7 @@ export const projects = [
         "Visualization of exponential time complexity growth"
       ]
     },
+
     {
       title: "University of Tampa App",
       subtitle: "Campus companion app for students and guests",
@@ -175,7 +174,7 @@ export const projects = [
         "Interactive, geolocated campus map integrated throughout the app",
         
       ],
-      embedUrl: "/videos/utampaapp.mov"
+      embedUrl: "/assets/utampaapp.mov"
     },
     {
       title: "A Way Home",
