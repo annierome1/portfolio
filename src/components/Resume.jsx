@@ -2,7 +2,7 @@
 import React from 'react';
 import { FaInfoCircle, FaDownload } from 'react-icons/fa';
 import '../styles/Resume.css';
-import resumeFile from '../assets/Annie_Rome_resume.pdf';
+import resumeFile from '../assets/AnnieRome.pdf';
 
 export default function Resume() {
   return (
