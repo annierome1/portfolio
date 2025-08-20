@@ -19,11 +19,14 @@ export const projects = [
         "Editable event calendar and menus",
         "Live site deployment via Vercel"
       ],
-      photo: "/assets/surfshack.png"
+      photo: "/assets/surfshack.png",
+      previewImage: "/assets/surfshack.png"
     },
   
     {
       title: "Glazier Children's Museum",
+      previewImage: "/assets/image.png",
+      photo: "/assets/image.png",
       subtitle: "Client-focused educational web app built with Django",
       status: "completed",
       category: "Full-Stack",
@@ -39,7 +42,8 @@ export const projects = [
         "Client-based feature customization",
         "User-friendly admin panel",
         "Educational resource delivery"
-      ]
+      ],
+      
     },
   
     
@@ -49,6 +53,8 @@ export const projects = [
       subtitle: "Developer portfolio built with React and Tailwind",
       category: "Personal",
       status: "completed",
+      photo: "/assets/logo_circle.png",
+      previewImage: "/assets/logo_circle.png",
       github: "https://github.com/annierome1/portfolio1",
       description: "A personal website to showcase my projects, skills, and development work.",
       technologies: [
@@ -69,6 +75,8 @@ export const projects = [
       subtitle: "Context-aware AI chatbot with Pinecone, OpenAI, and AWS automation",
       category: "Personal",
       status: "completed",
+      photo: "/assets/chat.png",
+      previewImage: "/assets/chat.png",
       github: "https://github.com/annierome1/ChatBotAnnie",
       description: "An intelligent personal chatbot using OpenAI and Pinecone, with an AWS Lambda + API Gateway setup that automatically syncs updated project and skill data from this portfolio.",
       technologies: [
@@ -108,7 +116,8 @@ export const projects = [
           "Dedicated section for the Fighter Foundation and its mission",
           "Live deployment and automatic updates using Vercel"
         ],
-        photo: "/assets/masda_logo_color_wt.png"
+        photo: "/assets/masda_logo_color_wt.png",
+        previewImage: "/assets/masda_logo_color_wt.png"
     },
     {
       title: "ResuBuild",
@@ -147,7 +156,7 @@ export const projects = [
       ],
       photo:
         "/assets/escape.jpg",
-        
+      previewImage: "/assets/escape.jpg",
       functions: [
         "Hamiltonian path puzzle generation",
         "Collectible-based escape room gameplay",
@@ -174,7 +183,8 @@ export const projects = [
         "Interactive, geolocated campus map integrated throughout the app",
         
       ],
-      embedUrl: "/assets/utampaapp.mov"
+      embedUrl: "/assets/utampaapp.mov",
+      previewImage: "/assets/spartan.png",
     },
     {
       title: "A Way Home",
@@ -182,7 +192,7 @@ export const projects = [
       status: "completed",
       category: "3D Development",
       description: "An immersive VR game teaching UN child rights via narrative-driven gameplay.",
-      link: "https://leadercop.weebly.com/meet-the-vr-g4c-team.html",
+      link: "https://www.suzanneensmann.com/purpose2day-a-way-home.html",
       video: "https://use.vg/kkdnVf",
       technologies: [
         { name: "Unity", icon: "FaUnity" },
