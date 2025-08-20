@@ -1,11 +1,12 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Annie Rome",
+  "name": "Annie Rome - Full Stack Developer & UI/UX Designer Portfolio",
+  "description": "Professional portfolio showcasing web development, mobile apps, 3D projects, and educational games",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "logo.jpg",
       "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "type": "image/jpeg"
     },
     {
       "src": "logo192.png",
@@ -18,8 +19,13 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#192234",
+  "background_color": "#192234",
+  "orientation": "portrait-primary",
+  "categories": ["business", "productivity", "utilities"],
+  "lang": "en-US",
+  "scope": "/",
+  "prefer_related_applications": false
 }
