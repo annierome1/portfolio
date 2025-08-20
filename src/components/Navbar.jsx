@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function Navbar() {
   return (
-    <header className="fixed inset-x-0 top-0 z-50 bg-transparent">
+    <header className="fixed inset-x-0 top-0 z-50  backdrop-blur-md">
       <div className="container mx-auto flex items-center justify-between px-6 py-4">
         <Link to="/">
           <div className="w-14 h-14 rounded-full overflow-hidden">
