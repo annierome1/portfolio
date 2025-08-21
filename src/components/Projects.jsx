@@ -48,7 +48,7 @@ function ProjectModal({ project, isOpen, onClose }) {
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
-        <div className="relative p-8 bg-gradient-to-br from-[#192234] via-[#e5dbf5]/5 to-[#1a2335] border-b border-[#e5dbf5]/10">
+        <div className="relative p-8 bg-gradient-to-br from-[#192234] via-[#e5dbf5]/10 to-[#1a2335] border-b border-[#e5dbf5]/20">
           {/* Close Button */}
           <button
             onClick={onClose}
@@ -63,16 +63,16 @@ function ProjectModal({ project, isOpen, onClose }) {
           {/* Project Title and Category */}
           <div className="text-center max-w-4xl mx-auto">
             <span className={`inline-block px-4 py-2 rounded-full text-sm font-medium mb-6 ${
-              project.category === 'Full-Stack' ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30' :
+              project.category === 'Full-Stack' ? 'bg-[#e5dbf5]/20 text-[#e5dbf5] border border-[#e5dbf5]/30' :
               project.category === 'Personal' ? 'bg-[#e5dbf5]/20 text-[#e5dbf5] border border-[#e5dbf5]/30' :
-              project.category === 'School' ? 'bg-green-500/20 text-green-300 border border-green-500/30' :
-              project.category === 'Mobile App' ? 'bg-orange-500/20 text-orange-300 border border-orange-500/30' :
-              project.category === 'Educational Game' ? 'bg-pink-500/20 text-pink-300 border border-pink-500/30' :
+              project.category === 'School' ? 'bg-[#e5dbf5]/20 text-[#e5dbf5] border border-[#e5dbf5]/30' :
+              project.category === 'Mobile App' ? 'bg-[#e5dbf5]/20 text-[#e5dbf5] border border-[#e5dbf5]/30' :
+              project.category === 'Educational Game' ? 'bg-[#e5dbf5]/20 text-[#e5dbf5] border border-[#e5dbf5]/30' :
               'bg-[#e5dbf5]/20 text-[#e5dbf5] border border-[#e5dbf5]/30'
             }`}>
               {project.category}
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-[#e5dbf5] to-blue-300 bg-clip-text text-transparent">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-[#e5dbf5]">
               {project.title}
             </h2>
             {project.subtitle && (
@@ -96,7 +96,7 @@ function ProjectModal({ project, isOpen, onClose }) {
                     <div className="w-1 h-6 bg-gradient-to-b from-[#e5dbf5] to-blue-400 rounded-full mr-3"></div>
                     About
                   </h3>
-                  <p className="text-gray-300 leading-relaxed">{project.description}</p>
+                  <p className="text-[#e5dbf5]/80 leading-relaxed">{project.description}</p>
                 </div>
               )}
 
@@ -111,7 +111,7 @@ function ProjectModal({ project, isOpen, onClose }) {
                     {project.functions.map((fn, idx) => (
                       <div key={idx} className="flex items-start space-x-2">
                         <div className="w-1.5 h-1.5 bg-[#e5dbf5] rounded-full mt-2 flex-shrink-0"></div>
-                        <p className="text-gray-300 text-sm">{fn}</p>
+                        <p className="text-[#e5dbf5]/80 text-sm">{fn}</p>
                       </div>
                     ))}
                   </div>
@@ -141,7 +141,7 @@ function ProjectModal({ project, isOpen, onClose }) {
                 {project.github && (
                   <button
                     onClick={() => window.open(project.github, '_blank')}
-                    className="inline-flex items-center justify-center bg-[#192234] hover:bg-[#1a2335] text-[#e5dbf5] px-4 py-2 rounded-lg transition-colors duration-200 border border-[#e5dbf5]/20 hover:border-[#e5dbf5]/40"
+                    className="inline-flex items-center justify-center bg-[#e5dbf5]/10 hover:bg-[#e5dbf5]/20 text-[#e5dbf5] px-4 py-2 rounded-lg transition-colors duration-200 border border-[#e5dbf5]/30 hover:border-[#e5dbf5]/50"
                   >
                     <FaGithub className="mr-2" /> Code
                   </button>
@@ -149,7 +149,7 @@ function ProjectModal({ project, isOpen, onClose }) {
                 {project.link && (
                   <button
                     onClick={() => window.open(project.link, '_blank')}
-                    className="inline-flex items-center justify-center bg-gradient-to-r from-[#e5dbf5] to-blue-600 hover:from-[#e5dbf5]/90 hover:to-blue-700 text-[#192234] px-4 py-2 rounded-lg transition-colors duration-200"
+                    className="inline-flex items-center justify-center bg-[#e5dbf5] hover:bg-[#e5dbf5]/90 text-[#192234] px-4 py-2 rounded-lg transition-colors duration-200"
                   >
                     <FaExternalLinkAlt className="mr-2" /> Demo
                   </button>
@@ -233,11 +233,11 @@ const ProjectCard = ({ project, setSelectedProject }) => {
           {/* Category Badge */}
           <div className="absolute top-3 right-3">
             <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
-              project.category === 'Full-Stack' ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30' :
+              project.category === 'Full-Stack' ? 'bg-[#e5dbf5]/20 text-[#e5dbf5] border border-[#e5dbf5]/30' :
               project.category === 'Personal' ? 'bg-[#e5dbf5]/20 text-[#e5dbf5] border border-[#e5dbf5]/30' :
-              project.category === 'School' ? 'bg-green-500/20 text-green-300 border border-green-500/30' :
-              project.category === 'Mobile App' ? 'bg-orange-500/20 text-orange-300 border border-orange-500/30' :
-              project.category === 'Educational Game' ? 'bg-pink-500/20 text-pink-300 border border-pink-500/30' :
+              project.category === 'School' ? 'bg-[#e5dbf5]/20 text-[#e5dbf5] border border-[#e5dbf5]/30' :
+              project.category === 'Mobile App' ? 'bg-[#e5dbf5]/20 text-[#e5dbf5] border border-[#e5dbf5]/30' :
+              project.category === 'Educational Game' ? 'bg-[#e5dbf5]/20 text-[#e5dbf5] border border-[#e5dbf5]/30' :
               'bg-[#e5dbf5]/20 text-[#e5dbf5] border border-[#e5dbf5]/30'
             }`}>
               {project.category}
