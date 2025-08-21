@@ -32,8 +32,8 @@ export default async function handler(req, res) {
       });
     }
 
-    // Create transporter inside the function
-    const transporter = nodemailer.createTransporter({
+    // Create transporter inside the function - fix the method name
+    const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
         user: process.env.EMAIL_USER,
