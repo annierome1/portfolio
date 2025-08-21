@@ -28,7 +28,7 @@ export default function Contact() {
                       name="name"
                       placeholder="Your Name"
                       required
-                      className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+                      className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-300 focus:ring-1 focus:ring-purple-500"
                     />
                   </div>
                   <div>
@@ -37,7 +37,7 @@ export default function Contact() {
                       name="email"
                       placeholder="Your Email"
                       required
-                      className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+                      className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-300 focus:ring-1 focus:ring-purple-500"
                     />
                   </div>
                 </div>
@@ -48,7 +48,7 @@ export default function Contact() {
                     name="subject"
                     placeholder="Subject"
                     required
-                    className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+                    className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-300 focus:ring-1 focus:ring-purple-500"
                   />
                 </div>
                 
@@ -58,7 +58,7 @@ export default function Contact() {
                     placeholder="Your Message"
                     required
                     rows="6"
-                    className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 resize-none"
+                    className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-300 focus:ring-1 focus:ring-purple-500 resize-none"
                   />
                 </div>
               </FormSubmit>

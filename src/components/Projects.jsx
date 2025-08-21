@@ -57,7 +57,7 @@ function ProjectModal({ project, isOpen, onClose }) {
                        p-3 rounded-full hover:bg-[#e5dbf5]/10 backdrop-blur-sm"
             aria-label="Close"
           >
-            <FaTimes size={20} />
+            <FaTimes size={25} />
           </button>
 
           {/* Project Title and Category */}
@@ -161,28 +161,44 @@ function ProjectModal({ project, isOpen, onClose }) {
             {(project.embedUrl || project.photo) && (
               <div className="flex items-center justify-center">
                 {project.embedUrl ? (
-                  /* Video Content */
-                  <div className="w-full max-w-md">
-                    <video
-                      className="w-full h-auto rounded-xl shadow-lg border border-[#e5dbf5]/20"
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      controls
-                    >
-                      <source src={project.embedUrl.replace('.mov', '.mp4')} type="video/mp4" />
-                      <source src={project.embedUrl} type="video/quicktime" />
-                      Your browser does not support HTML5 video.
-                    </video>
+                  /* Video Content with iPhone Frame */
+                  <div className="w-full max-w-sm mx-auto">
+                    {/* iPhone Frame */}
+                    <div className="relative mx-auto w-64 h-[32rem] bg-gray-900 rounded-[3rem] p-2 shadow-2xl">
+                      {/* Screen Bezel */}
+                      <div className="w-full h-full bg-gray-800 rounded-[2.5rem] p-1">
+                        {/* Screen */}
+                        <div className="w-full h-full bg-black rounded-[2.25rem] overflow-hidden relative">
+                          {/* Notch */}
+                          <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-20 h-6 bg-gray-900 rounded-b-2xl z-10"></div>
+                          
+                          {/* Video Content */}
+                          <video
+                            className="w-full h-full object-cover"
+                            autoPlay
+                            muted
+                            loop
+                            playsInline
+                            controls
+                          >
+                            <source src={project.embedUrl.replace('.mov', '.mp4')} type="video/mp4" />
+                            <source src={project.embedUrl} type="video/quicktime" />
+                            Your browser does not support HTML5 video.
+                          </video>
+                        </div>
+                      </div>
+                      
+                      {/* Home Indicator */}
+                      <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-gray-600 rounded-full"></div>
+                    </div>
                   </div>
                 ) : (
                   /* Image Content */
-                  <div className="w-full max-w-md">
+                  <div className="w-full max-w-lg">
                     <img
                       src={project.photo}
                       alt={`${project.title} screenshot`}
-                      className="w-full h-auto rounded-xl shadow-lg border border-[#e5dbf5]/20"
+                      className="w-full h-auto max-h-96 rounded-xl shadow-lg border border-[#e5dbf5]/20"
                     />
                   </div>
                 )}
