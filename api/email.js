@@ -3,12 +3,27 @@ import nodemailer from 'nodemailer';
 const transporter = nodemailer.createTransporter({
   service: 'gmail',
   auth: {
-    user: process.env.REACT_APP_EMAIL_USER,        // your Gmail address
-    pass: process.env.EMAIL_PASS,        // your Gmail app password
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
   },
 });
 
 export default async function handler(req, res) {
+  // Enable CORS for Vercel
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,DELETE,PATCH,POST,PUT');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+  );
+
+  // Handle preflight request
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
+
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method Not Allowed' });
   }
@@ -25,7 +40,6 @@ export default async function handler(req, res) {
     } else if (formType === 'inquiry') {
       lines.push("I'd like to submit an inquiry about:", '');
     } else {
-      // default → general inquiry
       lines.push('I have a question regarding:', '');
     }
 
@@ -52,17 +66,17 @@ export default async function handler(req, res) {
 
     // Send via Gmail SMTP
     await transporter.sendMail({
-      from: `"Portfolio Contact Form" <${process.env.REACT_APP_EMAIL_USER}>`,
-      to: to || process.env.REACT_APP_EMAIL_USER, // send to specified email or default to yourself
+      from: `"Portfolio Contact Form" <${process.env.EMAIL_USER}>`,
+      to: to || process.env.EMAIL_USER,
       subject: `Portfolio Contact: ${subject || 'New Message'}`,
       text,
       html,
-      replyTo: email // so you can reply directly to the person
+      replyTo: email
     });
 
-    return res.status(200).json({ success: true, message: 'Email sent successfully' });
+    res.status(200).json({ success: true, message: 'Email sent successfully' });
   } catch (err) {
     console.error('Mail send error:', err);
-    return res.status(500).json({ error: 'Failed to send email.' });
+    res.status(500).json({ error: 'Failed to send email.' });
   }
 }
