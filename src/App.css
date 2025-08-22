@@ -23,3 +23,26 @@ main {
   align-items: center;
   justify-content: center;
 }
+
+/* Disable snap scrolling on Projects page for mobile */
+@media (max-width: 768px) {
+  /* Target the Projects route section */
+  #projects-route {
+    scroll-snap-align: none !important;
+  }
+  
+  /* Target the Projects component itself */
+  #projects {
+    scroll-snap-align: none !important;
+  }
+  
+  /* Override any inherited snap behavior */
+  #projects-route * {
+    scroll-snap-align: none !important;
+  }
+  
+  /* Force disable snap on the main element when Projects is active */
+  main:has(#projects-route) {
+    scroll-snap-type: none !important;
+  }
+}

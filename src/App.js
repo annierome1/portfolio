@@ -80,7 +80,7 @@ export default function App() {
           <Route
             path="/projects"
             element={
-              <section className="snap-center min-h-screen backdrop-blur-lg">
+              <section className="min-h-screen backdrop-blur-lg" id="projects-route">
                 <div className="pt-16 flex justify-center">
                   <Projects />
                 </div>
