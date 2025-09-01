@@ -70,9 +70,9 @@ export default function App() {
       let lastScrollTime = 0;
       let lastKeyTime = 0;
       let lastScrollToSectionTime = 0;
-      const scrollCooldown = 500; // Increased cooldown to prevent jumping
-      const keyCooldown = 800; // Increased cooldown for keyboard events
-      const scrollToSectionCooldown = 1000; // Cooldown between scrollToSection calls
+      const scrollCooldown = 400; // Increased cooldown to prevent jumping
+      const keyCooldown = 700; // Increased cooldown for keyboard events
+      const scrollToSectionCooldown = 800; // Cooldown between scrollToSection calls
       
       const sections = document.querySelectorAll('.snap-center');
       const totalSections = sections.length;
@@ -169,28 +169,14 @@ export default function App() {
           
           // Add keyboard cooldown to prevent rapid key presses
           const now = Date.now();
-          if (now - lastKeyTime < keyCooldown) {
-            console.log('Key press too soon, ignoring (cooldown:', now - lastKeyTime, 'ms)');
-            return;
-          }
           lastKeyTime = now;
-          
-          if (isScrolling) {
-            console.log('Already scrolling, ignoring key press');
-            return;
-          }
           
           const container = document.querySelector('main');
           const scrollTop = container.scrollTop;
           const sectionHeight = window.innerHeight;
           const currentSection = Math.floor(scrollTop / sectionHeight);
           const scrollPosition = scrollTop % sectionHeight;
-          
-          console.log('Container scrollTop:', scrollTop);
-          console.log('Section height:', sectionHeight);
-          console.log('Current section:', currentSection);
-          console.log('Scroll position within section:', scrollPosition);
-          console.log('Total sections:', totalSections);
+        
           
           if (isDownKey && currentSection < totalSections - 1) {
             console.log('Moving to next section:', currentSection + 1);
