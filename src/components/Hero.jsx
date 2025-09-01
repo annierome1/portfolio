@@ -16,8 +16,7 @@ export default function Hero() {
 
       {/* headline + subheadline */}
       <div className="relative z-10">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-purple-100 mb-4 px-4 
-                       bg-gradient-to-r from-purple-100 via-purple-200 to-purple-100 bg-clip-text text-transparent
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-purple-100 mb-6 px-4 
                        drop-shadow-lg">
           Dev & Design
         </h1>
