@@ -65,8 +65,8 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Social Links */}
-          <div className="mt-12 flex justify-center space-x-4">
+          {/* Social Links - Hidden on mobile, shown on desktop */}
+          <div className="hidden md:flex mt-12 justify-center space-x-4">
             <a href="https://github.com/annierome1" className="text-purple-100 hover:text-purple-300 transition-colors duration-200">
               <AiFillGithub size="2em" />
             </a>
