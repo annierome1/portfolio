@@ -63,46 +63,90 @@ export default function App() {
     }
   }, [location.pathname]);
 
-  // Enhanced scroll control for homepage
+  // Section-stopping functionality for homepage with auto-scroll fix
   useEffect(() => {
     if (location.pathname === '/') {
       let isScrolling = false;
+      let lastScrollTime = 0;
+      let lastKeyTime = 0;
+      let lastScrollToSectionTime = 0;
+      const scrollCooldown = 500; // Increased cooldown to prevent jumping
+      const keyCooldown = 800; // Increased cooldown for keyboard events
+      const scrollToSectionCooldown = 1000; // Cooldown between scrollToSection calls
+      
       const sections = document.querySelectorAll('.snap-center');
       const totalSections = sections.length;
+      
+      console.log('=== SECTIONS DEBUG ===');
+      console.log('Total sections found:', totalSections);
+      sections.forEach((section, index) => {
+        console.log(`Section ${index}:`, section);
+        console.log(`Section ${index} classes:`, section.className);
+      });
+      console.log('=== END SECTIONS DEBUG ===');
 
       const scrollToSection = (sectionIndex) => {
-        if (sectionIndex < 0 || sectionIndex >= totalSections || isScrolling) return;
+        console.log('=== SCROLL TO SECTION DEBUG ===');
+        console.log('Attempting to scroll to section:', sectionIndex);
+        console.log('isScrolling:', isScrolling);
+        console.log('Section bounds check:', sectionIndex >= 0 && sectionIndex < totalSections);
+        
+        // Add additional cooldown check for scrollToSection calls
+        const now = Date.now();
+        if (now - lastScrollToSectionTime < scrollToSectionCooldown) {
+          console.log('ScrollToSection called too soon, ignoring');
+          return;
+        }
+        lastScrollToSectionTime = now;
+        
+        if (sectionIndex < 0 || sectionIndex >= totalSections || isScrolling) {
+          console.log('Scroll blocked - invalid section or already scrolling');
+          return;
+        }
         
         isScrolling = true;
         const targetSection = sections[sectionIndex];
+        console.log('Target section element:', targetSection);
+        console.log('Starting scroll animation...');
         
         targetSection.scrollIntoView({
           behavior: 'smooth',
           block: 'center'
         });
 
-        // Reset scrolling flag after animation
+        // Increased timeout to ensure animation completes
         setTimeout(() => {
+          console.log('Scroll animation completed, resetting isScrolling flag');
           isScrolling = false;
-        }, 800);
+        }, 1500); // Increased timeout to 1500ms
+        
+        console.log('=== END SCROLL TO SECTION DEBUG ===');
       };
 
       const handleWheel = (e) => {
-        e.preventDefault(); // Prevent default scrolling behavior
+        e.preventDefault();
         
         if (isScrolling) return;
+        
+        // Throttle scroll events to prevent rapid firing
+        const now = Date.now();
+        if (now - lastScrollTime < scrollCooldown) {
+          return;
+        }
+        lastScrollTime = now;
 
         const container = document.querySelector('main');
         const scrollTop = container.scrollTop;
         const sectionHeight = window.innerHeight;
-        const currentSection = Math.round(scrollTop / sectionHeight);
+        const currentSection = Math.floor(scrollTop / sectionHeight);
 
+        // Simplified mouse pad scrolling - works like keyboard but with throttling
         if (e.deltaY > 0) {
           // Scrolling down - go to next section
           if (currentSection < totalSections - 1) {
             scrollToSection(currentSection + 1);
           }
-        } else {
+        } else if (e.deltaY < 0) {
           // Scrolling up - go to previous section
           if (currentSection > 0) {
             scrollToSection(currentSection - 1);
@@ -111,37 +155,70 @@ export default function App() {
       };
 
       const handleKeyDown = (e) => {
-        if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+        // Check for arrow keys and page keys
+        const isDownKey = e.key === 'ArrowDown' || e.key === 'PageDown' || e.keyCode === 40 || e.keyCode === 34;
+        const isUpKey = e.key === 'ArrowUp' || e.key === 'PageUp' || e.keyCode === 38 || e.keyCode === 33;
+        
+        if (isDownKey || isUpKey) {
+          console.log('=== KEYBOARD DEBUG ===');
+          console.log('Key pressed:', e.key, 'KeyCode:', e.keyCode);
+          console.log('isScrolling:', isScrolling);
+          
           e.preventDefault();
+          e.stopPropagation();
+          
+          // Add keyboard cooldown to prevent rapid key presses
+          const now = Date.now();
+          if (now - lastKeyTime < keyCooldown) {
+            console.log('Key press too soon, ignoring (cooldown:', now - lastKeyTime, 'ms)');
+            return;
+          }
+          lastKeyTime = now;
+          
+          if (isScrolling) {
+            console.log('Already scrolling, ignoring key press');
+            return;
+          }
+          
           const container = document.querySelector('main');
           const scrollTop = container.scrollTop;
           const sectionHeight = window.innerHeight;
-          const currentSection = Math.round(scrollTop / sectionHeight);
+          const currentSection = Math.floor(scrollTop / sectionHeight);
+          const scrollPosition = scrollTop % sectionHeight;
           
-          if (currentSection < totalSections - 1) {
+          console.log('Container scrollTop:', scrollTop);
+          console.log('Section height:', sectionHeight);
+          console.log('Current section:', currentSection);
+          console.log('Scroll position within section:', scrollPosition);
+          console.log('Total sections:', totalSections);
+          
+          if (isDownKey && currentSection < totalSections - 1) {
+            console.log('Moving to next section:', currentSection + 1);
             scrollToSection(currentSection + 1);
-          }
-        } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-          e.preventDefault();
-          const container = document.querySelector('main');
-          const scrollTop = container.scrollTop;
-          const sectionHeight = window.innerHeight;
-          const currentSection = Math.round(scrollTop / sectionHeight);
-          
-          if (currentSection > 0) {
+          } else if (isUpKey && currentSection > 0) {
+            console.log('Moving to previous section:', currentSection - 1);
             scrollToSection(currentSection - 1);
+          } else {
+            console.log('Cannot move further in this direction');
           }
+          console.log('=== END KEYBOARD DEBUG ===');
         }
       };
 
       const container = document.querySelector('main');
       if (container) {
         container.addEventListener('wheel', handleWheel, { passive: false });
-        document.addEventListener('keydown', handleKeyDown);
+        
+        // Attach keyboard listeners to multiple targets for reliability
+        document.addEventListener('keydown', handleKeyDown, { capture: true });
+        window.addEventListener('keydown', handleKeyDown, { capture: true });
+        container.addEventListener('keydown', handleKeyDown, { capture: true });
         
         return () => {
           container.removeEventListener('wheel', handleWheel);
-          document.removeEventListener('keydown', handleKeyDown);
+          document.removeEventListener('keydown', handleKeyDown, { capture: true });
+          window.removeEventListener('keydown', handleKeyDown, { capture: true });
+          container.removeEventListener('keydown', handleKeyDown, { capture: true });
         };
       }
     }
