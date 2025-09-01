@@ -9,7 +9,7 @@ export default function AboutMe() {
           <img
             src={webPic}
             alt="Annie Rome headshot"
-            className="rounded-2xl shadow-2xl object-cover object-center w-full h-96 sm:h-[28rem] md:h-full"
+            className="rounded-2xl shadow-2xl object-cover object-center w-90 h-96 sm:h-[28rem] md:h-full mx-auto"
           />
         </div>
         <div className="text-white space-y-3 sm:space-y-4 order-1 md:order-2 text-center md:text-left -mt-8 sm:-mt-12 md:pt-0">
