@@ -23,7 +23,14 @@ main {
   justify-content: center;
 }
 
-/* Disable snap scrolling on Projects page for mobile */
+/* Override snap-center alignment for mobile */
+@media (max-width: 768px) {
+  .snap-center {
+    align-items: flex-start !important;
+  }
+}
+
+/* Mobile-specific improvements */
 @media (max-width: 768px) {
   /* Target the Projects route section */
   #projects-route {
@@ -43,5 +50,22 @@ main {
   /* Force disable snap on the main element when Projects is active */
   main:has(#projects-route) {
     scroll-snap-type: none !important;
+  }
+  
+  /* Ensure proper mobile spacing */
+  .snap-center {
+    padding: 1rem;
+    min-height: 100vh;
+  }
+  
+  /* Prevent horizontal overflow */
+  body, html {
+    overflow-x: hidden;
+  }
+  
+  /* Better mobile text sizing */
+  h1, h2, h3 {
+    word-wrap: break-word;
+    hyphens: auto;
   }
 }

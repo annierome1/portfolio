@@ -21,12 +21,12 @@ export default function Skills() {
         </div>
 
         {/* Category Tabs */}
-        <div className="flex flex-wrap justify-center mb-6 space-x-2 sm:space-x-3">
+        <div className="flex flex-wrap justify-center mb-6 gap-2 sm:gap-3 px-4">
           {categories.map((category) => (
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`px-4 py-2 sm:px-5 sm:py-2 font-medium rounded-lg transition-colors duration-300 ${
+              className={`px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base font-medium rounded-lg transition-colors duration-300 ${
                 selectedCategory === category
                   ? "bg-purple-100 text-gray-800"
                   : "bg-gray-700 text-gray-300 hover:bg-gray-500"

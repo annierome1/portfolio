@@ -13,8 +13,8 @@ export default function Contact() {
           </h2>
           
           {/* Contact Form */}
-          <div className="flex flex-col w-full max-w-2xl mx-auto mt-8">
-            <div className="bg-gradient-to-br from-[#192234]/50 to-[#1a2335]/50 rounded-2xl p-8 border border-[#e5dbf5]/20">
+          <div className="flex flex-col w-full max-w-2xl mx-auto mt-8 px-4">
+            <div className="bg-gradient-to-br from-[#192234]/50 to-[#1a2335]/50 rounded-2xl p-4 sm:p-6 md:p-8 border border-[#e5dbf5]/20">
               <FormSubmit
                 formType="contact"
                 subject="Portfolio Contact"

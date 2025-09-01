@@ -263,7 +263,7 @@ export default function App() {
                     <Route
             path="/resume"
             element={
-              <section className="snap-center min-h-screen">
+              <section className="min-h-screen">
                 <Resume />
               </section>
             }
