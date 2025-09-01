@@ -51,6 +51,102 @@ function GoogleAnalytics() {
 }
 
 export default function App() {
+  const location = useLocation();
+
+  // Scroll to top whenever route changes
+  useEffect(() => {
+    // Scroll both window and main container to top
+    window.scrollTo(0, 0);
+    const mainContainer = document.querySelector('main');
+    if (mainContainer) {
+      mainContainer.scrollTo(0, 0);
+    }
+  }, [location.pathname]);
+
+  // Enhanced scroll control for homepage
+  useEffect(() => {
+    if (location.pathname === '/') {
+      let isScrolling = false;
+      const sections = document.querySelectorAll('.snap-center');
+      const totalSections = sections.length;
+
+      const scrollToSection = (sectionIndex) => {
+        if (sectionIndex < 0 || sectionIndex >= totalSections || isScrolling) return;
+        
+        isScrolling = true;
+        const targetSection = sections[sectionIndex];
+        
+        targetSection.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center'
+        });
+
+        // Reset scrolling flag after animation
+        setTimeout(() => {
+          isScrolling = false;
+        }, 800);
+      };
+
+      const handleWheel = (e) => {
+        e.preventDefault(); // Prevent default scrolling behavior
+        
+        if (isScrolling) return;
+
+        const container = document.querySelector('main');
+        const scrollTop = container.scrollTop;
+        const sectionHeight = window.innerHeight;
+        const currentSection = Math.round(scrollTop / sectionHeight);
+
+        if (e.deltaY > 0) {
+          // Scrolling down - go to next section
+          if (currentSection < totalSections - 1) {
+            scrollToSection(currentSection + 1);
+          }
+        } else {
+          // Scrolling up - go to previous section
+          if (currentSection > 0) {
+            scrollToSection(currentSection - 1);
+          }
+        }
+      };
+
+      const handleKeyDown = (e) => {
+        if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+          e.preventDefault();
+          const container = document.querySelector('main');
+          const scrollTop = container.scrollTop;
+          const sectionHeight = window.innerHeight;
+          const currentSection = Math.round(scrollTop / sectionHeight);
+          
+          if (currentSection < totalSections - 1) {
+            scrollToSection(currentSection + 1);
+          }
+        } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+          e.preventDefault();
+          const container = document.querySelector('main');
+          const scrollTop = container.scrollTop;
+          const sectionHeight = window.innerHeight;
+          const currentSection = Math.round(scrollTop / sectionHeight);
+          
+          if (currentSection > 0) {
+            scrollToSection(currentSection - 1);
+          }
+        }
+      };
+
+      const container = document.querySelector('main');
+      if (container) {
+        container.addEventListener('wheel', handleWheel, { passive: false });
+        document.addEventListener('keydown', handleKeyDown);
+        
+        return () => {
+          container.removeEventListener('wheel', handleWheel);
+          document.removeEventListener('keydown', handleKeyDown);
+        };
+      }
+    }
+  }, [location.pathname]);
+
   return (
     <div className="relative">
       <Background />
