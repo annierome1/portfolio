@@ -1,6 +1,5 @@
 html {
   scroll-behavior: smooth;
-  scroll-snap-type: y mandatory;
   height: 100%;
 }
 body, #root {
@@ -8,13 +7,13 @@ body, #root {
   padding: 0;
   height: 100%;
   min-height: 100vh;
-  overflow: scroll;
-  
+  overflow: hidden; /* Prevent body scroll */
 }
 main {
   scroll-snap-type: y mandatory;
   overflow-y: auto;
   height: 100vh;
+  scroll-behavior: smooth;
 }
 .snap-center {
   scroll-snap-align: center;
