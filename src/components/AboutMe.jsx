@@ -13,7 +13,7 @@ export default function AboutMe() {
           />
         </div>
         <div className="text-white space-y-3 sm:space-y-4 order-1 md:order-2 text-center md:text-left -mt-8 sm:-mt-12 md:pt-0">
-          <h2 className="text-3xl sm:text-4xl font-bold text-purple-300">About Me</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold text-purple-100">About Me</h2>
           <p className="text-gray-300 leading-relaxed text-sm sm:text-base">
             I'm Annie—a full‑stack engineer with a double major in CS and Psychology,
             building seamless web experiences and human‑centered AI tools.
