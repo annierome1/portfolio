@@ -278,6 +278,14 @@ export const skills = {
     { name: "Pinecone"},
     { name: "FastAPI"}
   ],
+  Tools: [
+    { name: "Git"},
+    { name: "Docker"},
+    { name: "AWS"},
+    { name: "Azure"},
+    { name: "Figma"},
+
+  ]
   
 };
 
