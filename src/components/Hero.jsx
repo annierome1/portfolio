@@ -35,7 +35,7 @@ export default function Hero() {
             bg-gradient-to-r from-purple-100 to-purple-200 text-gray-900
             font-semibold px-6 py-3
             rounded-full
-            hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25
+            hover:scale-105 hover:shadow-lg 
             transition-all duration-300
             text-center
             w-full sm:w-auto
@@ -50,7 +50,7 @@ export default function Hero() {
             border-2 border-purple-100 text-purple-100
             font-semibold px-6 py-3
             rounded-full
-            hover:bg-purple-100 hover:text-gray-900 hover:shadow-lg hover:shadow-purple-500/25
+            hover:bg-purple-100 hover:text-gray-900 hover:shadow-lg 
             transition-all duration-300
             text-center
             w-full sm:w-auto

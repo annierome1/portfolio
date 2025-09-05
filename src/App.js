@@ -70,9 +70,9 @@ export default function App() {
       let lastScrollTime = 0;
       let lastKeyTime = 0;
       let lastScrollToSectionTime = 0;
-      const scrollCooldown = 400; // Increased cooldown to prevent jumping
+      const scrollCooldown = 100; // Increased cooldown to prevent jumping
       const keyCooldown = 700; // Increased cooldown for keyboard events
-      const scrollToSectionCooldown = 800; // Cooldown between scrollToSection calls
+      const scrollToSectionCooldown = 100; // Cooldown between scrollToSection calls
       
       const sections = document.querySelectorAll('.snap-center');
       const totalSections = sections.length;
