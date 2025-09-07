@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { FaComments } from "react-icons/fa";
+import { FaComments, FaExpand, FaCompress, FaPaperPlane, FaTrash } from "react-icons/fa";
 import "../styles/chatbot.css";
 
 const Chatbot = () => {
@@ -7,6 +7,7 @@ const Chatbot = () => {
     const [input, setInput] = useState("");
     const [isTyping, setIsTyping] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
+    const [isExpanded, setIsExpanded] = useState(false);
     const [streamingResponse, setStreamingResponse] = useState("");
     const eventSourceRef = useRef(null); 
     const chatBoxRef = useRef(null);
@@ -30,12 +31,27 @@ const Chatbot = () => {
         setIsTyping(true);
 
         try {
-            const API_BASE_URL = "https://chatbotannie-production.up.railway.app"; 
+            const API_BASE_URL = 'https://chatbotannie-production-65d9.up.railway.app';
+            
+            // Debug: Log the request details
+            console.log("🚀 Making request to:", `${API_BASE_URL}/chat`);
+            console.log("📤 Request body:", { message: input, session_id: "session_123" });
+            
             const response = await fetch(`${API_BASE_URL}/chat`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ message: input, session_id: "session_123" }),
             });
+            
+            // Debug: Log response details
+            console.log("📥 Response status:", response.status);
+            console.log("📥 Response headers:", Object.fromEntries(response.headers.entries()));
+            
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error("❌ API Error Response:", errorText);
+                throw new Error(`API Error: ${response.status} - ${errorText}`);
+            }
 
             const reader = response.body.getReader();
             const decoder = new TextDecoder("utf-8");
@@ -86,7 +102,17 @@ const Chatbot = () => {
             }
 
         } catch (error) {
-            console.error("Error:", error);
+            console.error("❌ Chatbot Error Details:");
+            console.error("Error type:", error.constructor.name);
+            console.error("Error message:", error.message);
+            console.error("Error stack:", error.stack);
+            
+            // Add user-friendly error message
+            const errorMessage = { 
+                role: "bot", 
+                content: `Sorry, I'm having trouble connecting right now. Error: ${error.message}` 
+            };
+            setMessages((prev) => [...prev, errorMessage]);
         } finally {
             setIsTyping(false);
         }
@@ -108,29 +134,66 @@ const Chatbot = () => {
         }
     };
 
+    // Test API connectivity
+    const testAPI = async () => {
+        try {
+            console.log("🔍 Testing API connectivity...");
+            const response = await fetch("https://chatbotannie-production.up.railway.app", {
+                method: "GET",
+            });
+            console.log("✅ API Health Check Status:", response.status);
+            console.log("✅ API Health Check Headers:", Object.fromEntries(response.headers.entries()));
+            
+            if (response.ok) {
+                const text = await response.text();
+                console.log("✅ API Response:", text.substring(0, 200) + "...");
+            }
+        } catch (error) {
+            console.error("❌ API Health Check Failed:", error);
+        }
+    };
+
+    // Test API on component mount
+    useEffect(() => {
+        testAPI();
+    }, []);
+
     return (
         <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
             {/* Toggle button as icon, only visible when chat is closed */}
             {!isOpen && (
                 <button
-                    className="bg-purple-200 hover:bg-purple-100 text-gray-900 rounded-full shadow-lg p-4 flex items-center justify-center"
-                    style={{ width: 60, height: 60 }}
+                    className="chat-toggle-btn"
                     onClick={() => setIsOpen(true)}
                     aria-label="Open Chatbot"
                 >
-                    <FaComments size={28} />
+                    <FaComments className="chat-icon" />
+                    <span className="chat-pulse"></span>
                 </button>
             )}
 
             {/* Chat window, only visible when open */}
             {isOpen && (
-                <div className="chatbot-wrapper" style={{ width: "400px", maxWidth: "90vw" }}>
+                <div className={`chatbot-wrapper ${isExpanded ? 'expanded' : 'collapsed'}`}>
                     <div className="chat-container show-chat">
                         <div className="chat-header">
-                            <h2>Chat with me</h2>
-                            <button className="close-btn" onClick={() => setIsOpen(false)}>
-                                ✖
-                            </button>
+                            <div className="header-content">
+                                <div className="header-info">
+                                    <h2>Chat with me</h2>
+                                </div>
+                                <div className="header-actions">
+                                    <button 
+                                        className="expand-btn" 
+                                        onClick={() => setIsExpanded(!isExpanded)}
+                                        aria-label={isExpanded ? "Collapse" : "Expand"}
+                                    >
+                                        {isExpanded ? <FaCompress /> : <FaExpand />}
+                                    </button>
+                                    <button className="close-btn" onClick={() => setIsOpen(false)}>
+                                        ✖
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                         <div
                             className="chatbox"
@@ -158,28 +221,27 @@ const Chatbot = () => {
                                 </div>
                             )}
                         </div>
-                        <div
-                            className="chat-input"
-                            style={{ display: "flex", padding: "10px", backgroundColor: "#111827" }}
-                        >
-                            <input
-                                type="text"
-                                value={input}
-                                onChange={(e) => setInput(e.target.value)}
-                                onKeyDown={(e)=> {
-                                    if (e.key === "Enter"){
-                                        sendMessage();
-                                        e.preventDefault();
-                                    }
-                                }}
-                                placeholder="Ask me anything..."
-                                style={{ flex: 1, marginRight: "5px" }}
-                            />
-                            <button className="send" onClick={sendMessage}>
-                                Send
-                            </button>
-                            <button className="clear" onClick={clearMessages}>
-                                Clear
+                        <div className="chat-input">
+                            <div className="input-container">
+                                <input
+                                    type="text"
+                                    value={input}
+                                    onChange={(e) => setInput(e.target.value)}
+                                    onKeyDown={(e)=> {
+                                        if (e.key === "Enter"){
+                                            sendMessage();
+                                            e.preventDefault();
+                                        }
+                                    }}
+                                    placeholder="Ask me anything..."
+                                    className="message-input"
+                                />
+                                <button className="send-btn" onClick={sendMessage} disabled={!input.trim()}>
+                                    <FaPaperPlane />
+                                </button>
+                            </div>
+                            <button className="clear-btn" onClick={clearMessages} title="Clear conversation">
+                                <FaTrash />
                             </button>
                         </div>
                     </div>
