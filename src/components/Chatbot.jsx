@@ -134,6 +134,99 @@ const Chatbot = () => {
         }
     };
 
+    const suggestionQuestions = [
+        "Tell me about your experience",
+        "What projects have you worked on?",
+        "What technologies do you know?",
+        "How can I contact you?",
+        "What's your background in development?"
+    ];
+
+    const handleSuggestionClick = async (question) => {
+        const userMessage = { role: "user", content: question };
+        setMessages((prev) => {
+            const updatedMessages = [...prev, userMessage];
+            scrollToBottom();
+            return updatedMessages;
+        });
+        setInput("");
+        setStreamingResponse("");
+        setIsTyping(true);
+
+        try {
+            const API_BASE_URL = 'https://chatbotannie-production-65d9.up.railway.app';
+            
+            const response = await fetch(`${API_BASE_URL}/chat`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: question, session_id: "session_123" }),
+            });
+            
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`API Error: ${response.status} - ${errorText}`);
+            }
+
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder("utf-8");
+            let botMessage = { role: "bot", content: "" };
+            let firstChunk = true;
+
+            setMessages((prev) => {
+                const updatedMessages = [...prev, botMessage];
+                scrollToBottom();
+                return updatedMessages;
+            });
+
+            let buffer = "";
+            const updateInterval = 100;
+            let lastUpdateTime = Date.now();
+
+            while (true) {
+                const { value, done } = await reader.read();
+                if (done) break;
+
+                const chunk = decoder.decode(value, { stream: true });
+                buffer += chunk;
+                const now = Date.now();
+
+                if (firstChunk || now - lastUpdateTime > updateInterval) {
+                    botMessage.content += buffer;
+                    setMessages((prev) => {
+                        const updated = [...prev.slice(0, -1), { ...botMessage }];
+                        scrollToBottom();
+                        return updated;
+                    });
+                    buffer = "";
+                    lastUpdateTime = now;
+                    if (firstChunk) {
+                        firstChunk = false;
+                        setIsTyping(false);
+                    }
+                }
+            }
+
+            if (buffer.length > 0) {
+                botMessage.content += buffer;
+                setMessages((prev) => {
+                    const updated = [...prev.slice(0, -1), { ...botMessage }];
+                    scrollToBottom();
+                    return updated;
+                });
+            }
+
+        } catch (error) {
+            console.error("❌ Chatbot Error Details:", error);
+            const errorMessage = { 
+                role: "bot", 
+                content: `Sorry, I'm having trouble connecting right now. Error: ${error.message}` 
+            };
+            setMessages((prev) => [...prev, errorMessage]);
+        } finally {
+            setIsTyping(false);
+        }
+    };
+
     // Test API connectivity
     const testAPI = async () => {
         try {
@@ -200,6 +293,24 @@ const Chatbot = () => {
                             ref={chatBoxRef}
                             style={{ flex: 1, overflowY: "auto"}}
                         >
+                            {messages.length === 0 && (
+                                <div className="suggestions-container">
+                                    <div className="suggestions-header">
+                                        <h3>Hi! I'm here to help. Try asking me:</h3>
+                                    </div>
+                                    <div className="suggestions-list">
+                                        {suggestionQuestions.map((question, index) => (
+                                            <button
+                                                key={index}
+                                                className="suggestion-btn"
+                                                onClick={() => handleSuggestionClick(question)}
+                                            >
+                                                {question}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
                             {messages.map((msg, index) => (
                                 <div
                                     key={index}
