@@ -12,6 +12,7 @@ import Contact    from "./components/Contact";
 import Projects   from "./components/Projects";
 import Resume     from "./components/Resume";
 import Chatbot    from "./components/Chatbot";
+import BackToTop  from "./components/BackToTop";
 
 
 const GA_ID = 'G-N6PD7N19SN';
@@ -70,28 +71,17 @@ export default function App() {
       let lastScrollTime = 0;
       let lastKeyTime = 0;
       let lastScrollToSectionTime = 0;
-      const scrollCooldown = 100; // Increased cooldown to prevent jumping
-      const keyCooldown = 700; // Increased cooldown for keyboard events
-      const scrollToSectionCooldown = 100; // Cooldown between scrollToSection calls
+      const scrollCooldown = 0; // Increased cooldown to prevent jumping
+      const keyCooldown = 0; 
+      const scrollToSectionCooldown = 0; 
       
       const sections = document.querySelectorAll('.snap-center');
       const totalSections = sections.length;
       
-      console.log('=== SECTIONS DEBUG ===');
-      console.log('Total sections found:', totalSections);
-      sections.forEach((section, index) => {
-        console.log(`Section ${index}:`, section);
-        console.log(`Section ${index} classes:`, section.className);
-      });
-      console.log('=== END SECTIONS DEBUG ===');
+   
 
       const scrollToSection = (sectionIndex) => {
-        console.log('=== SCROLL TO SECTION DEBUG ===');
-        console.log('Attempting to scroll to section:', sectionIndex);
-        console.log('isScrolling:', isScrolling);
-        console.log('Section bounds check:', sectionIndex >= 0 && sectionIndex < totalSections);
-        
-        // Add additional cooldown check for scrollToSection calls
+  
         const now = Date.now();
         if (now - lastScrollToSectionTime < scrollToSectionCooldown) {
           console.log('ScrollToSection called too soon, ignoring');
@@ -107,8 +97,6 @@ export default function App() {
         isScrolling = true;
         const targetSection = sections[sectionIndex];
         console.log('Target section element:', targetSection);
-        console.log('Starting scroll animation...');
-        
         targetSection.scrollIntoView({
           behavior: 'smooth',
           block: 'center'
@@ -233,6 +221,7 @@ export default function App() {
                 <section className="snap-center min-h-screen flex items-center justify-center">
                   <Contact />
                 </section>
+                <BackToTop />
               </>
             }
           />
