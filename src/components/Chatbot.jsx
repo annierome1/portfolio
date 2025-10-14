@@ -251,6 +251,7 @@ const Chatbot = () => {
         testAPI();
     }, []);
 
+
     return (
         <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
             {/* Toggle button as icon, only visible when chat is closed */}

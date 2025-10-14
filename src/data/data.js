@@ -22,6 +22,32 @@ export const projects = [
       photo: "/assets/surfshack.png",
       previewImage: "/assets/surfshack.png"
     },
+    {
+      title: "Black Rock Social Club",
+      subtitle: "Full-Stack Web Experience",
+      status: "completed",
+      category: "Full-Stack",
+      description:
+        "A fully custom full-stack website built for a private social club. Optimized for SEO and designed for performance, the site features a client-editable event calendar powered by Sanity CMS and seamless Google Sheets integration to capture contact and membership form submissions for the team.",
+      link: "https://www.blackrocksocial.com/",
+      technologies: [
+        { name: "Next.js", icon: "RiNextjsFill" },
+        { name: "Tailwind", icon: "RiTailwindCssFill" },
+        { name: "Vercel", icon: "IoLogoVercel" },
+        { name: "Sanity", icon: "SiSanity" },
+        { name: "Google Sheets API", icon: "SiGoogle" }
+      ],
+      functions: [
+        "Full-stack architecture with dynamic content via Sanity.io",
+        "Client-editable calendar and menu management",
+        "Automated Google Sheets integration for lead tracking",
+        "Search engine optimization and responsive design",
+        "Deployed and hosted on Vercel for high performance"
+      ],
+      photo: "/assets/blackrock.jpg",
+      previewImage: "/assets/blackrock.jpg"
+    },
+    
   
     {
       title: "Glazier Children's Museum",
@@ -49,26 +75,30 @@ export const projects = [
     
   
     {
-      title: "Portfolio",
-      subtitle: "Developer portfolio built with React and Tailwind",
+      title: "Annie Rome Client Site",
+      subtitle: "Interactive personal site built with React and Tailwind",
       category: "Personal",
       status: "completed",
       photo: "/assets/logo_circle.png",
       previewImage: "/assets/logo_circle.png",
+      link: "https://www.annierome.dev/",
       github: "https://github.com/annierome1/portfolio1",
-      description: "A personal website to showcase my projects, skills, and development work.",
+      description:
+        "A custom-built portfolio showcasing my full-stack projects, design philosophy, and brand identity. Built with React and styled using Tailwind CSS, the site features smooth animations, interactive project displays, and a refined user experience optimized for performance and SEO.",
       technologies: [
         { name: "React", icon: "FaReact" },
-        { name: "Tailwind", icon: "RiTailwindCssFill" },
+        { name: "Tailwind CSS", icon: "RiTailwindCssFill" },
         { name: "Vercel", icon: "IoLogoVercel" }
       ],
       functions: [
-        "Interactive project showcase",
-        "Responsive UI design",
-        "Tech stack highlights",
-        "GitHub integration"
+        "Dynamic, scroll-based navigation between About, Projects, and Contact sections",
+        "Animated transitions and responsive layout across all devices",
+        "Showcase of live client builds and personal projects",
+        "Custom styling and branding consistent with Annie Rome’s identity",
+        "Deployed with Vercel for speed, scalability, and SEO optimization"
       ]
     },
+    
   
     {
       title: "ChatBot",
