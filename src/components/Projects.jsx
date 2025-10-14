@@ -1,7 +1,7 @@
 // pages/Projects.js
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { FaTimes, FaGithub, FaExternalLinkAlt, FaGraduationCap, FaGamepad, FaBriefcase, FaCode, FaBook } from 'react-icons/fa';
+import { FaTimes, FaGithub, FaExternalLinkAlt, FaGraduationCap, FaGamepad, FaBriefcase, FaCode, FaBook, FaMobileAlt } from 'react-icons/fa';
 import { projects } from '../data/data';
 import { motion } from 'framer-motion';
 
@@ -46,14 +46,15 @@ function ProjectModal({ project, isOpen, onClose }) {
         <div
           className="relative z-[2147483647]
                      w-[96vw] sm:w-[95vw] md:w-full max-w-6xl
-                     h-[90dvh] sm:h-[90dvh] md:h-[90dvh]
+                     max-h-[90dvh]
                      bg-gradient-to-br from-[#192234] to-[#1a2335]
                      rounded-xl sm:rounded-2xl md:rounded-3xl
-                     border border-[#e5dbf5]/20 shadow-2xl shadow-[#e5dbf5]/10 overflow-hidden mx-2 sm:mx-3 md:mx-4"
+                     border border-[#e5dbf5]/20 shadow-2xl shadow-[#e5dbf5]/10 overflow-hidden mx-2 sm:mx-3 md:mx-4
+                     flex flex-col"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="relative p-2 sm:p-3 md:p-4 lg:p-6 xl:p-8 bg-gradient-to-br from-[#192234] via-[#e5dbf5]/10 to-[#1a2335] border-b border-[#e5dbf5]/20">
+          <div className="relative flex-shrink-0 p-2 sm:p-3 md:p-4 lg:p-6 xl:p-8 bg-gradient-to-br from-[#192234] via-[#e5dbf5]/10 to-[#1a2335] border-b border-[#e5dbf5]/20">
             <button
               onClick={onClose}
               className="absolute top-2 right-2 sm:top-3 sm:right-3 md:top-6 md:right-6 text-[#e5dbf5] hover:text-[#e5dbf5]/80
@@ -80,7 +81,7 @@ function ProjectModal({ project, isOpen, onClose }) {
           </div>
 
           {/* Body (scroll area) */}
-          <div className="p-2 sm:p-3 md:p-4 lg:p-6 xl:p-8 overflow-y-auto h-[calc(80dvh-120px)] sm:h-[calc(88dvh-140px)] md:h-[calc(92dvh-160px)]">
+          <div className="flex-1 min-h-0 p-2 sm:p-3 md:p-4 lg:p-6 xl:p-8 overflow-y-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 sm:gap-3 md:gap-4 lg:gap-6 xl:gap-8">
               {/* Left: details */}
               <div className="space-y-3 sm:space-y-4 md:space-y-6">
@@ -195,73 +196,74 @@ function ProjectModal({ project, isOpen, onClose }) {
   return createPortal(modal, modalRoot);
 }
 
-/* ---------- Card ---------- */
-const ProjectCard = ({ project, setSelectedProject }) => {
+/* ---------- Minimal Kanban Card ---------- */
+const KanbanCard = ({ project, setSelectedProject }) => {
   return (
     <motion.div
-      whileHover={{ y: -8, scale: 1.02 }}
-      transition={{ duration: 0.3, ease: 'easeOut' }}
-      className="group cursor-pointer"
+      whileHover={{ y: -2 }}
+      transition={{ duration: 0.15 }}
+      className="cursor-pointer mb-2"
       onClick={() => setSelectedProject(project)}
     >
-      <div className="bg-gradient-to-br from-[#192234] to-[#1a2335] rounded-2xl p-4 sm:p-6 border border-[#e5dbf5]/20 hover:border-[#e5dbf5]/40 transition-all duration-300 backdrop-blur-sm hover:shadow-2xl hover:shadow-[#e5dbf5]/10">
-        <div className="relative mb-4 sm:mb-6 overflow-hidden rounded-xl bg-gradient-to-br from-[#e5dbf5]/5 to-[#e5dbf5]/10">
-          {project.embedUrl ? (
-            <img
-              src={project.previewImage}
-              alt={`${project.title} preview`}
-              className="w-full h-32 sm:h-40 md:h-48 object-contain group-hover:scale-105 transition-transform duration-300 bg-gradient-to-br from-[#192234]/20 to-[#1a2335]/20"
-            />
-          ) : project.photo ? (
-            <img
-              src={project.photo}
-              alt={`${project.title} screenshot`}
-              className="w-full h-32 sm:h-40 md:h-48 object-contain group-hover:scale-105 transition-transform duration-300 bg-gradient-to-br from-[#192234]/20 to-[#1a2335]/20"
-            />
-          ) : (
-            <div className="w-full h-32 sm:h-40 md:h-48 flex items-center justify-center">
-              <div className="text-center">
-                <div className="text-3xl sm:text-4xl text-[#e5dbf5]/40 mb-2">💻</div>
-                <p className="text-[#e5dbf5]/40 text-xs sm:text-sm">No preview</p>
-              </div>
-            </div>
-          )}
-          <div className="absolute top-2 right-2 sm:top-3 sm:right-3">
-            <span className="inline-block px-2 sm:px-3 py-1 rounded-full text-xs font-medium bg-[#e5dbf5]/20 text-[#e5dbf5] border border-[#e5dbf5]/30">
-              {project.category}
+      <div className="bg-[#1a2335]/50 hover:bg-[#1a2335]/80 rounded-md p-3 border border-[#e5dbf5]/5 hover:border-[#e5dbf5]/20 transition-all duration-150">
+        {/* Title */}
+        <h3 className="text-sm font-medium text-[#e5dbf5] mb-1.5 leading-snug">
+          {project.title}
+        </h3>
+
+        {/* Tech Stack - Minimal Pills */}
+        <div className="flex flex-wrap gap-1">
+          {project.technologies.slice(0, 2).map((tech) => (
+            <span
+              key={tech.name}
+              className="text-[9px] text-[#e5dbf5]/50"
+            >
+              {tech.name}
             </span>
-          </div>
+          ))}
+          {project.technologies.length > 2 && (
+            <span className="text-[9px] text-[#e5dbf5]/30">
+              +{project.technologies.length - 2}
+            </span>
+          )}
         </div>
 
-        <div className="space-y-3 sm:space-y-4">
-          <h3 className="text-lg sm:text-xl font-bold text-[#e5dbf5] group-hover:text-[#e5dbf5]/90 transition-colors duration-200">
-            {project.title}
-          </h3>
-
-          {project.subtitle && (
-            <p className="text-[#e5dbf5]/70 text-xs sm:text-sm leading-relaxed">
-              {project.subtitle}
-            </p>
+        {/* Bottom Indicators */}
+        <div className="flex items-center gap-1.5 mt-2">
+          {project.github && (
+            <FaGithub className="w-2.5 h-2.5 text-[#e5dbf5]/25" />
           )}
-
-          <div className="flex flex-wrap gap-1 sm:gap-2">
-            {project.technologies.slice(0, 3).map((tech) => (
-              <span
-                key={tech.name}
-                className="px-2 py-1 bg-[#e5dbf5]/10 text-[#e5dbf5]/80 text-xs rounded-lg border border-[#e5dbf5]/20"
-              >
-                {tech.name}
-              </span>
-            ))}
-            {project.technologies.length > 3 && (
-              <span className="px-2 py-1 bg-[#e5dbf5]/10 text-[#e5dbf5]/60 text-xs rounded-lg border border-[#e5dbf5]/20">
-                +{project.technologies.length - 3} more
-              </span>
-            )}
-          </div>
+          {project.link && (
+            <FaExternalLinkAlt className="w-2.5 h-2.5 text-[#e5dbf5]/25" />
+          )}
         </div>
       </div>
     </motion.div>
+  );
+};
+
+/* ---------- Kanban Column ---------- */
+const KanbanColumn = ({ title, icon: Icon, count, projects, setSelectedProject, color = "#e5dbf5" }) => {
+  return (
+    <div className="flex-shrink-0 w-full sm:w-72 bg-[#192234]/20 rounded-lg p-3 border border-[#e5dbf5]/5">
+      {/* Column Header */}
+      <div className="flex items-center justify-between mb-3 pb-2 border-b border-[#e5dbf5]/5">
+        <div className="flex items-center gap-2">
+          <Icon className="text-[#e5dbf5]/60 text-xs" />
+          <h3 className="font-medium text-[#e5dbf5]/80 text-xs uppercase tracking-wide">{title}</h3>
+        </div>
+        <span className="text-[10px] text-[#e5dbf5]/40">
+          {count}
+        </span>
+      </div>
+
+      {/* Cards Container */}
+      <div className="space-y-0 max-h-[600px] overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-[#e5dbf5]/10 scrollbar-track-transparent">
+        {projects.map((project) => (
+          <KanbanCard key={project.id || project.title} project={project} setSelectedProject={setSelectedProject} />
+        ))}
+      </div>
+    </div>
   );
 };
 
@@ -314,145 +316,82 @@ export default function Projects() {
     };
   }, [selectedProject]);
 
-  // Groups
-  const clientWork = useMemo(() => projects.filter(p => p.category === 'Full-Stack'), []);
-  const utampaWork = useMemo(() => projects.filter(p => p.title === 'University of Tampa App' || p.title === 'A Way Home'), []);
-  const personalProjects = useMemo(() => projects.filter(p => p.category === 'Personal'), []);
-  const schoolProjects = useMemo(() => projects.filter(p => p.category === 'School'), []);
-  const educationalGames = useMemo(() => projects.filter(p => p.category === 'Educational Game'), []);
-  const mobileApps = useMemo(() => projects.filter(p => p.category === 'Mobile App'), []);
-  const threeDProjects = useMemo(() => projects.filter(p => p.category === '3D Development'), []);
+  // Kanban columns data
+  const kanbanColumns = useMemo(() => {
+    const columns = [
+      {
+        title: 'Client Work',
+        icon: FaBriefcase,
+        projects: projects.filter(p => p.category === 'Full-Stack')
+      },
+      {
+        title: 'Personal',
+        icon: FaCode,
+        projects: projects.filter(p => p.category === 'Personal')
+      },
+      {
+        title: 'University Work',
+        icon: FaGraduationCap,
+        projects: projects.filter(p => p.title === 'University of Tampa App' || p.title === 'A Way Home')
+      },
+      {
+        title: 'Educational Games',
+        icon: FaGamepad,
+        projects: projects.filter(p => p.category === 'Educational Game')
+      },
+      {
+        title: 'Mobile Apps',
+        icon: FaMobileAlt,
+        projects: projects.filter(p => p.category === 'Mobile App' && p.title !== 'University of Tampa App')
+      },
+      {
+        title: 'School',
+        icon: FaBook,
+        projects: projects.filter(p => p.category === 'School')
+      },
+      {
+        title: '3D Development',
+        icon: FaCode,
+        projects: projects.filter(p => p.category === '3D Development' && p.title !== 'A Way Home')
+      }
+    ];
+    
+    // Filter out empty columns
+    return columns.filter(col => col.projects.length > 0);
+  }, []);
 
   return (
     <section id="projects" className="py-4 sm:py-16 md:py-20" style={{ overflowAnchor: 'none' }}>
       <div className="container mx-auto px-4 sm:px-6">
         {/* Header */}
-        <div className="text-center mb-12 sm:mb-16">
+        <div className="text-center mb-8 sm:mb-12">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#e5dbf5] mb-4 sm:mb-6">My Projects</h2>
           <p className="text-base sm:text-lg md:text-xl text-[#e5dbf5]/70 max-w-3xl mx-auto leading-relaxed px-4">
-            A collection of my work across different domains, from client projects to personal experiments
+            A collection of my work organized Kanban-style
           </p>
         </div>
 
-        {/* Client Work */}
-        {clientWork.length > 0 && (
-          <div className="mb-20">
-            <div className="mb-8 sm:mb-12 flex justify-center">
-              <div className="w-11/12 sm:w-4/5 max-w-4xl inline-flex items-center space-x-3 sm:space-x-4 p-4 sm:p-6 bg-gradient-to-r from-[#e5dbf5]/10 to-[#e5dbf5]/5 rounded-2xl border border-[#e5dbf5]/20 backdrop-blur-sm">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-[#e5dbf5] to-[#e5dbf5]/80 rounded-xl flex items-center justify-center">
-                  <FaBriefcase className="text-[#192234] text-lg sm:text-xl" />
-                </div>
-                <div className="text-left">
-                  <h3 className="text-xl sm:text-2xl font-bold text-[#e5dbf5]">Client Work</h3>
-                  <p className="text-[#e5dbf5]/70 text-xs sm:text-sm">Professional websites and applications</p>
-                </div>
-              </div>
-            </div>
-            <div className="bg-gradient-to-br from-[#192234]/50 to-[#1a2335]/50 rounded-3xl p-4 sm:p-6 md:p-8 border border-[#e5dbf5]/10">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
-                {clientWork.map((project) => (
-                  <ProjectCard key={project.id} project={project} setSelectedProject={setSelectedProject} />
-                ))}
-              </div>
-            </div>
+        {/* Kanban Board */}
+        <div className="relative">
+          {/* Horizontal scroll container on desktop, vertical stack on mobile */}
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 overflow-x-auto pb-4 sm:pb-6 scrollbar-thin scrollbar-thumb-[#e5dbf5]/20 scrollbar-track-transparent">
+            {kanbanColumns.map((column, idx) => (
+              <KanbanColumn
+                key={idx}
+                title={column.title}
+                icon={column.icon}
+                count={column.projects.length}
+                projects={column.projects}
+                setSelectedProject={setSelectedProject}
+              />
+            ))}
           </div>
-        )}
 
-        {/* UTampa */}
-        {utampaWork.length > 0 && (
-          <div className="mb-16 sm:mb-20">
-            <div className="mb-8 sm:mb-12 flex justify-center">
-              <div className="w-11/12 sm:w-4/5 max-w-4xl inline-flex items-center space-x-3 sm:space-x-4 p-4 sm:p-6 bg-gradient-to-r from-[#e5dbf5]/10 to-[#e5dbf5]/5 rounded-2xl border border-[#e5dbf5]/20 backdrop-blur-sm">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-[#e5dbf5] to-[#e5dbf5]/80 rounded-xl flex items-center justify-center">
-                  <FaGraduationCap className="text-[#192234] text-lg sm:text-xl" />
-                </div>
-                <div className="text-left">
-                  <h3 className="text-xl sm:text-2xl font-bold text-[#e5dbf5]">University of Tampa</h3>
-                  <p className="text-[#e5dbf5]/70 text-xs sm:text-sm">Academic and research projects</p>
-                </div>
-              </div>
-            </div>
-            <div className="bg-gradient-to-br from-[#1a2335]/50 to-[#192234]/50 rounded-3xl p-4 sm:p-6 md:p-8 border border-[#e5dbf5]/10">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
-                {utampaWork.map((project) => (
-                  <ProjectCard key={project.id} project={project} setSelectedProject={setSelectedProject} />
-                ))}
-              </div>
-            </div>
+          {/* Scroll hint for desktop */}
+          <div className="hidden sm:block text-center mt-4 text-[#e5dbf5]/40 text-xs">
+            ← Scroll horizontally to see all columns →
           </div>
-        )}
-
-        {/* Personal */}
-        {personalProjects.length > 0 && (
-          <div className="mb-16 sm:mb-20">
-            <div className="mb-8 sm:mb-12 flex justify-center">
-              <div className="w-11/12 sm:w-4/5 max-w-4xl inline-flex items-center space-x-3 sm:space-x-4 p-4 sm:p-6 bg-gradient-to-r from-[#e5dbf5]/10 to-[#e5dbf5]/5 rounded-2xl border border-[#e5dbf5]/20 backdrop-blur-sm">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-[#e5dbf5] to-[#e5dbf5]/80 rounded-xl flex items-center justify-center">
-                  <FaCode className="text-[#192234] text-lg sm:text-xl" />
-                </div>
-                <div className="text-left">
-                  <h3 className="text-xl sm:text-2xl font-bold text-[#e5dbf5]">Personal Projects</h3>
-                  <p className="text-[#e5dbf5]/70 text-xs sm:text-sm">Creative coding experiments</p>
-                </div>
-              </div>
-            </div>
-            <div className="bg-gradient-to-br from-[#192234]/50 to-[#1a2335]/50 rounded-3xl p-4 sm:p-6 md:p-8 border border-[#e5dbf5]/10">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
-                {personalProjects.map((project) => (
-                  <ProjectCard key={project.id} project={project} setSelectedProject={setSelectedProject} />
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Educational Games */}
-        {educationalGames.length > 0 && (
-          <div className="mb-16 sm:mb-20">
-            <div className="mb-8 sm:mb-12 flex justify-center">
-              <div className="w-11/12 sm:w-4/5 max-w-4xl inline-flex items-center space-x-3 sm:space-x-4 p-4 sm:p-6 bg-gradient-to-r from-[#e5dbf5]/10 to-[#e5dbf5]/5 rounded-2xl border border-[#e5dbf5]/20 backdrop-blur-sm">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-[#e5dbf5] to-[#e5dbf5]/80 rounded-xl flex items-center justify-center">
-                  <FaGamepad className="text-[#192234] text-lg sm:text-xl" />
-                </div>
-                <div className="text-left">
-                  <h3 className="text-xl sm:text-2xl font-bold text-[#e5dbf5]">Educational Games</h3>
-                  <p className="text-[#e5dbf5]/70 text-xs sm:text-sm">Learning through play</p>
-                </div>
-              </div>
-            </div>
-            <div className="bg-gradient-to-br from-[#1a2335]/50 to-[#192234]/50 rounded-3xl p-4 sm:p-6 md:p-8 border border-[#e5dbf5]/10">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
-                {educationalGames.map((project) => (
-                  <ProjectCard key={project.id} project={project} setSelectedProject={setSelectedProject} />
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* School */}
-        {schoolProjects.length > 0 && (
-          <div className="mb-16 sm:mb-20">
-            <div className="mb-8 sm:mb-12 flex justify-center">
-              <div className="w-11/12 sm:w-4/5 max-w-4xl inline-flex items-center space-x-3 sm:space-x-4 p-4 sm:p-6 bg-gradient-to-r from-[#e5dbf5]/10 to-[#e5dbf5]/5 rounded-2xl border border-[#e5dbf5]/20 backdrop-blur-sm">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-[#e5dbf5] to-[#e5dbf5]/80 rounded-xl flex items-center justify-center">
-                  <FaBook className="text-[#192234] text-lg sm:text-xl" />
-                </div>
-                <div className="text-left">
-                  <h3 className="text-xl sm:text-2xl font-bold text-[#e5dbf5]">School Projects</h3>
-                  <p className="text-[#e5dbf5]/70 text-xs sm:text-sm">Class assignments and coursework</p>
-                </div>
-              </div>
-            </div>
-            <div className="bg-gradient-to-br from-[#192234]/50 to-[#1a2335]/50 rounded-3xl p-4 sm:p-6 md:p-8 border border-[#e5dbf5]/10">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
-                {schoolProjects.map((project) => (
-                  <ProjectCard key={project.id} project={project} setSelectedProject={setSelectedProject} />
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
+        </div>
       </div>
 
       {/* Modal */}
